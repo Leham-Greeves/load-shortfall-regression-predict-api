@@ -76,6 +76,7 @@ def _preprocess_data(data):
     feature_vector_df['Valencia_wind_deg'] = pd.to_numeric(feature_vector_df['Valencia_wind_deg'])
     feature_vector_df = feature_vector_df.str.extract('(\d+)')   # Extract numeric values from each value
     feature_vector_df = pd.to_numeric(feature_vector_df)
+    predict_vector = feature_vector_df
     # ------------------------------------------------------------------------
 
     return predict_vector
