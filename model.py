@@ -67,7 +67,7 @@ def _preprocess_data(data):
     feature_vector_df['Hour'] = feature_vector_df['time'].astype('datetime64').dt.hour
     feature_vector_df['Minute'] = feature_vector_df['time'].astype('datetime64').dt.minute
     feature_vector_df['Second'] = feature_vector_df['time'].astype('datetime64').dt.second
-    feature_vector_df = feature_vector_df .drop([ 'Barcelona_temp', 'Barcelona_temp_max', 'Barcelona_temp_min', 'Bilbao_temp', 'Bilbao_temp_max', 'Bilbao_temp_min', 'Madrid_temp', 'Madrid_temp_max', 'Madrid_temp_min', 'Seville_temp', 'Seville_temp_min', 'Valencia_temp', 'Valencia_temp_min','time'],axis=1)
+    feature_vector_df = feature_vector_df.drop([ 'Barcelona_temp', 'Barcelona_temp_max', 'Barcelona_temp_min', 'Bilbao_temp', 'Bilbao_temp_max', 'Bilbao_temp_min', 'Madrid_temp', 'Madrid_temp_max', 'Madrid_temp_min', 'Seville_temp', 'Seville_temp_min', 'Valencia_temp', 'Valencia_temp_min','time'],axis=1)
     # replacing null values with median
     feature_vector_df['Valencia_pressure'] = feature_vector_df['Valencia_pressure'].fillna(feature_vector_df['Valencia_pressure'].median())
     feature_vector_df = feature_vector_df.fillna(feature_vector_df['Valencia_pressure'].median())
