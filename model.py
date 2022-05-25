@@ -58,17 +58,15 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-        #changing time to date time 
-    feature_vector_df['time'] = pd.to_datetime(feature_vector_df['time'])
-    feature_vector_df['time'] = pd.to_datetime(feature_vector_df['time'])
+    #changing time to date time 
     feature_vector_df['time'] = pd.to_datetime(feature_vector_df['time'])
 
-    feature_vector_df['Year'] = feature_vector_df['time'].dt.year
-    feature_vector_df['Month'] = feature_vector_df['time'].dt.month
-    feature_vector_df['Day'] = feature_vector_df['time'].dt.day
-    feature_vector_df['Hour'] = feature_vector_df['time'].dt.hour
-    feature_vector_df['Minute'] = feature_vector_df['time'].dt.minute
-    feature_vector_df['Second'] = feature_vector_df['time'].dt.second
+    feature_vector_df['Year'] = feature_vector_df['time'].astype('datetime64').dt.year
+    feature_vector_df['Month'] = feature_vector_df['time'].astype('datetime64').dt.month
+    feature_vector_df['Day'] = feature_vector_df['time'].astype('datetime64').dt.day
+    feature_vector_df['Hour'] = feature_vector_df['time'].astype('datetime64').dt.hour
+    feature_vector_df['Minute'] = feature_vector_df['time'].astype('datetime64').dt.minute
+    feature_vector_df['Second'] = feature_vector_df['time'].astype('datetime64').dt.second
 
     # replacing null values with median
     feature_vector_df['Valencia_pressure'] = feature_vector_df['Valencia_pressure'].fillna(feature_vector_df['Valencia_pressure'].median())
@@ -134,4 +132,4 @@ def make_prediction(data, model):
     # Perform prediction with model and preprocessed data.
     prediction = model.predict(prep_data)
     # Format as list for output standardisation.
-    return prediction[0].tolist()
+    return prediction.tolist()
