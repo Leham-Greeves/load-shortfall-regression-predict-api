@@ -58,24 +58,31 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    #changing time to date time 
+    #changing time to date time
+    for x in feature_vector_df.columns:
+        if x == np.nan:
+            x.replace(feature_vector_df.mean())
+        return x
     feature_vector_df['time'] = pd.to_datetime(feature_vector_df['time'])
 
-    feature_vector_df['Year'] = feature_vector_df['time'].astype('datetime64').dt.year
-    feature_vector_df['Month'] = feature_vector_df['time'].astype('datetime64').dt.month
-    feature_vector_df['Day'] = feature_vector_df['time'].astype('datetime64').dt.day
-    feature_vector_df['Hour'] = feature_vector_df['time'].astype('datetime64').dt.hour
-    feature_vector_df['Minute'] = feature_vector_df['time'].astype('datetime64').dt.minute
-    feature_vector_df['Second'] = feature_vector_df['time'].astype('datetime64').dt.second
-    feature_vector_df = feature_vector_df.drop([ 'Barcelona_temp', 'Barcelona_temp_max', 'Barcelona_temp_min', 'Bilbao_temp', 'Bilbao_temp_max', 'Bilbao_temp_min', 'Madrid_temp', 'Madrid_temp_max', 'Madrid_temp_min', 'Seville_temp', 'Seville_temp_min', 'Valencia_temp', 'Valencia_temp_min','time'],axis=1)
+    feature_vector_df['Year'] = feature_vector_df['time'].dt.year
+    feature_vector_df['Month'] = feature_vector_df['time'].dt.month
+    feature_vector_df['Day'] = feature_vector_df['time'].dt.day
+    feature_vector_df['Hour'] = feature_vector_df['time'].dt.hour
+    feature_vector_df['Minute'] = feature_vector_df['time'].dt.minute
+    feature_vector_df['Second'] = feature_vector_df['time'].dt.second
+    feature_vector_df = feature_vector_df.drop(['Barcelona_temp', 'Barcelona_temp_max', 'Barcelona_temp_min', 'Bilbao_temp', 'Bilbao_temp_max', 'Bilbao_temp_min', 'Madrid_temp', 'Madrid_temp_max', 'Madrid_temp_min', 'Seville_temp', 'Seville_temp_min', 'Valencia_temp', 'Valencia_temp_min','time', 'Unnamed: 0'],axis=1)
     # replacing null values with median
     feature_vector_df['Valencia_pressure'] = feature_vector_df['Valencia_pressure'].fillna(feature_vector_df['Valencia_pressure'].median())
-    feature_vector_df = feature_vector_df.fillna(feature_vector_df['Valencia_pressure'].median())
+
     # Changing Object dtypes to int
-    feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].str.extract('(\d+)')   # Extract numeric values from each value
+    feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].str.extract('(\d+)')  
     feature_vector_df['Valencia_wind_deg'] = pd.to_numeric(feature_vector_df['Valencia_wind_deg'])
-    feature_vector_df = feature_vector_df.str.extract('(\d+)')   # Extract numeric values from each value
-    feature_vector_df = pd.to_numeric(feature_vector_df)
+
+    # Convert to integer
+    feature_vector_df['Seville_pressure'] = feature_vector_df['Seville_pressure'].str.extract('(\d+)')   
+    feature_vector_df['Seville_pressure'] = pd.to_numeric(feature_vector_df['Seville_pressure'])
+    
     predict_vector = feature_vector_df
     # ------------------------------------------------------------------------
 
